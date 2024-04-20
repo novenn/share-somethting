@@ -44,6 +44,7 @@
   font-size: 16px;
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.25s;
 
   .main {
     display: flex;
@@ -53,78 +54,11 @@
 }
 
 .clipbord:focus {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-.clipbord .piece {
-  padding: 5px;
-  background-color: #666;
-  width: 32%;
-  height: 80px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  box-sizing: border-box;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-}
-
-.clipbord .piece:nth-child(3n+3) {
-  margin-right: 0;
-}
-
-.clipbord .piece .time {
-  font-size: 14px;
-  color: #ccc;
-}
-
-.clipbord .piece .content {
-  font-size: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.clipbord .piece .size {
-  font-size: 14px;
-}
-
-.clipbord .piece .body {
-  flex-grow: 1;
-  line-height: 18px;
-}
-
-.clipbord .piece .footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.clipbord .piece .footer img {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.clipbord .piece .footer img:hover {
-  opacity: 1;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .clipbord:focus, .clipbord:active {
   border: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

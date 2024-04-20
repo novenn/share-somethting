@@ -4,6 +4,7 @@ const io = require('./io');
 const cors = require('cors');
 const router = require("./router")
 const path = require('path');
+const fs = require('fs')
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +17,15 @@ app.use(express.urlencoded({limit: '10000mb', extended: true, parameterLimit:500
 app.use(cors());
 app.use("/api", router)
 app.use("/uploads/", express.static(path.join(__dirname,"./uploads"))); 
+app.use("*", (req, res) => {
+  const filepath = path.join(__dirname, "../build" + req.baseUrl)
+  
+  if(fs.statSync(filepath).isFile()) {
+    res.sendFile(filepath)
+  } else {
+    res.sendFile(path.join(__dirname,"../build/index.html"))
+  }
+})
 
 io.start(server)
 

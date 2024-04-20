@@ -1,18 +1,10 @@
 const socketIO = require('socket.io');
 const clipbord = require('./clipbord');
 
+
 const clients = new Set();
 
 clipbord.start();
-
-clipbord.onexpired(piece => {
-  clients.forEach(client => {
-    client.send({
-      type: 'expired',
-      data: [piece]
-    })
-  })
-})
 
 module.exports = {
   start(server) {

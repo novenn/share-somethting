@@ -3,7 +3,6 @@ import './App.scss';
 import io from 'socket.io-client';
 import { PORT ,post, uploadFile } from './api';
 import Material from './components/Material';
-const LIFE_TIME = 0.35 * 60 * 1000;
 
 const socket = io(window.location.hostname + ':' + PORT);
 
@@ -13,7 +12,6 @@ function App() {
 
   useEffect(() => {
     function init() {
-      console.log("的点点滴滴")
       // 监听服务器发送的消息
       socket.on('message', data => {
         if(data.type === 'text') {
@@ -32,7 +30,7 @@ function App() {
       let modified = false
       for (let i = materials.length - 1; i >= 0; i--) {
         const material = materials[i]
-        const deadline = material.ctime + LIFE_TIME
+        const deadline = material.ctime + material.LEFT_TIME
         const remain = deadline - Date.now();
     
         if(remain < 0) {
@@ -42,8 +40,6 @@ function App() {
           material["dying"] = true
           modified = true;
         } 
-    
-        console.log("remain", remain)
       }
     
       if(modified) {

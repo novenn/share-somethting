@@ -1,10 +1,13 @@
 
 const { v4: uuidv4 } = require('uuid');
+const fs = require('fs')
+const path = require('path')
 
-const LIFE_TIME = 5 * 60 * 1000;
+const LEFT_TIME = 1 * 60 * 1000;
 const clipbord = [];
 let timer = null
-let expiredCallback = () => null
+
+
 
 module.exports = {
   push(type, data) {
@@ -14,6 +17,7 @@ module.exports = {
       type: type,
       data: data,
       ctime: Date.now(),
+      LEFT_TIME
     }
     clipbord.push(content);
 
@@ -23,17 +27,20 @@ module.exports = {
     return clipbord;
   },
 
-  onexpired(callback) {
-    expiredCallback = callback;
-  },
   start() {
-    timer = setInterval(() => {
-      const last = clipbord[clipbord.length - 1];
-      if(last && Date.now() - last.ctime > LIFE_TIME) { 
-        expiredCallback(last);
-        clipbord.shift()
+    setInterval(() => {
+      const now = Date.now();
+      for( let i = clipbord.length - 1; i >= 0; i-- ) {
+        if(now >= clipbord[i].ctime + clipbord[i].LEFT_TIME) {
+         
+          if(clipbord[i].type === 'file') {
+            fs.rmSync(path.join(__dirname, "./" + clipbord[i].data.path))
+          }
+
+          clipbord.splice(i, 1);
+        }
       }
-    }, 3000)
+    }, 1000)
   },
   stop() {
     clearInterval(timer)
