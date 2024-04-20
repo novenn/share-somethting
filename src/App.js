@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.scss';
 import io from 'socket.io-client';
 import { PORT ,post, uploadFile } from './api';
 import Material from './components/Material';
+import AddIcon from "./static/add.svg"
 
 const socket = io(window.location.hostname + ':' + PORT);
 
 function App() {
   const [text, setText] = useState('');
+  const uploadBtn = useRef(null)
   const [clipbord, setClipbord] = useState([]);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ function App() {
  }
 
  function handleChooseFile() {
-
+  uploadBtn.current.click()
  }
 
  function handleFileChange(event) {
@@ -88,20 +90,24 @@ function App() {
       content: data.fileName,
     })
   })
+
+  uploadBtn.current.value = ""
  }
 
   return (
     <div className="App">
-      <div className="body">
-        <div className="clipbord" tabIndex="-1" onKeyDown={handleKeyDown}>
+      <div className="body" tabIndex="-1" onKeyDown={handleKeyDown}>
+        <div className="clipbord" >
           <div className='main'>
             { clipbord.map(i => Material(i))}
           </div>
         </div>
+        <div className='actions'>
+          <img src={AddIcon} className='action' onClick={handleChooseFile}/>
+        </div>
       </div>
       <div className="footer">
-        <input type='file' className='file' onChange={handleFileChange}></input>
-        <button className="share" onClick={handleChooseFile}>Choose File</button>
+        <input type='file' className='file' onChange={handleFileChange}  ref={uploadBtn}></input>
       </div>
     </div>
   );

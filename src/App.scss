@@ -29,22 +29,52 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+
+  .file {
+    display: none;
+  }
+
+  & > .body {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 400px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    transition: box-shadow 0.25s;
+    overflow: hidden;
+
+    &:focus {
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+
+      img {
+        width: 18px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: 0.25s opacity;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
 
 
 .clipbord {
-  width: 600px;
-  height: 400px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  border-radius: 8px;
-  border: none;
-  text-align: left;
-  font-size: 16px;
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow 0.25s;
+  flex-grow: 1;
+  overflow: auto;
 
   .main {
     display: flex;
@@ -53,12 +83,7 @@
   }
 }
 
-.clipbord:focus {
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
 
-.clipbord:focus, .clipbord:active {
-  border: none;
-}
+
 
 
