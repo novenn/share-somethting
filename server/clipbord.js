@@ -3,11 +3,9 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs')
 const path = require('path')
 
-const LEFT_TIME = 1 * 60 * 1000;
+let LEFT_TIME = 1 * 60 * 1000;
 const clipbord = [];
 let timer = null
-
-
 
 module.exports = {
   push(type, data) {
@@ -27,7 +25,8 @@ module.exports = {
     return clipbord;
   },
 
-  start() {
+  start(file_expired = 1) {
+    LEFT_TIME = file_expired * 60 * 1000;
     setInterval(() => {
       const now = Date.now();
       for( let i = clipbord.length - 1; i >= 0; i-- ) {
